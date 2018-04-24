@@ -1,5 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { ForbiddenException } from 'forbidden/forbidden.exception';
 
 @Controller('users')
 export class UsersController {
@@ -10,5 +11,10 @@ export class UsersController {
   async root() {
     let rs: any = await this.userService.login();
     return rs;
+  }
+
+  @Get('/test-exp')
+  async create(@Body() body) {
+    throw new ForbiddenException();
   }
 }
